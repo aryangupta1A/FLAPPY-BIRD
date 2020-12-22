@@ -38,16 +38,13 @@ def makepipe():
     toppipe=pipe.get_rect(midbottom=(550, height-heightset))#change difficulity level
     return belowpipe,toppipe
 def collision(pipelist) :
-    global canscore
     for i in pipelist :
         if birdrect.colliderect(i):
             collidesound.play()
             return False
-            canscore=True
     if birdrect.top<=0 or birdrect.bottom>=430:
         collidesound.play()
         return False
-        canscore=True
     return True
 def movepipes(pipelist):
     global score
@@ -72,27 +69,25 @@ def flappingbird():
 def displayscore(state):
     if state=='active':
 
-        scoresurface=game_font.render(f'Score:{str(int(score))}',True,(255,255,255))
+        scoresurface=game_font.render(f'Score:{str(int(score/4))}',True,(255,255,255))
         scoresurfacerect=scoresurface.get_rect(center=(144,50))
         screen.blit(scoresurface,scoresurfacerect)
     if state == 'over':
-        scoresurface = game_font.render(f'Score:{str(int(score))}', True, (255, 255, 255))
+        scoresurface = game_font.render(f'Score:{str(int(score/4))}', True, (255, 255, 255))
         scoresurfacerect = scoresurface.get_rect(center=(144, 50))
         screen.blit(scoresurface, scoresurfacerect)
 
-        hscoresurface = game_font.render(f'Highscore:{str(int(highscore))}', True, (255, 255, 255))
+        hscoresurface = game_font.render(f'Highscore:{str(int(highscore/4))}', True, (255, 255, 255))
         hscoresurfacerect = scoresurface.get_rect(center=(130, 400))
         screen.blit(hscoresurface, hscoresurfacerect)
 def scorefunction():
-    global score,canscore
+    global score
     if pipelist:
         for pipe in pipelist:
-            if 27 <pipe.centerx<33 and canscore :
+            if 27 <pipe.centerx<33  :
                 score+=1
                 scoresound.play()
-                canscore=False
-            if pipe.centerx<0:
-                canscore=True
+
 def upgradehighscore(score,highscore):
     if score>highscore:
         highscore=score
@@ -107,7 +102,7 @@ message=game_font.render(f'PRESS SPACE TO CONTINUE',True,(255,255,255))
 messagerect=message.get_rect(center=(144,250))
 
 main=0#for main screen
-canscore=True
+
 #score
 #pipetrial
 #bird movement
